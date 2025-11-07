@@ -1,0 +1,236 @@
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+/* DEFAULT STYLES */
+:root {
+  --ACCENT-CLR: #00fec3;
+  --BODY-CLR: #0e1213;
+}
+
+p {
+  color: white;
+  font-family: sans-serif;
+}
+
+body {
+  background-color: var(--BODY-CLR);
+}
+svg {
+  color: white;
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  color: var(--ACCENT-CLR);
+  padding-top: 4rem;
+  padding-bottom: 1rem;
+  margin-bottom: 0;
+  font-family: sans-serif;
+  font-size: 2rem;
+  font-weight: bolder;
+  font-weight: 800;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* INPUT FIELD */
+.input-field {
+  border: 0.05px solid white;
+  display: flex;
+  justify-content: space-between;
+  padding-inline-start: 0.8rem;
+  border-radius: 2rem;
+}
+
+input {
+  background-color: transparent;
+  width: 25rem;
+  padding: 0.25rem;
+  border: none;
+  outline: red;
+  color: white;
+  cursor: pointer;
+
+  font-size: 0.9rem;
+}
+
+.add-btn {
+  background-color: rgba(255, 0, 0, 0.212);
+  background-color: var(--ACCENT-CLR);
+
+  border: none;
+  border-radius: 2rem;
+
+  height: inherit;
+  padding: 0.5rem;
+  width: 3.8rem;
+
+  font-weight: 600;
+  font-size: 0.7rem;
+
+  cursor: pointer;
+}
+
+.svg-holder {
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo-list {
+  width: 100%;
+  margin-top: 0.5rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  display: flex;
+}
+
+.checkbox-n-item {
+  display: flex;
+  height: max-content;
+  gap: 0.5rem;
+  margin: auto 0;
+  margin: 0;
+  padding: 0;
+}
+
+.checkbox {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+
+  width: 1.3rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--ACCENT-CLR);
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.checkbox:checked {
+  background-color: var(--ACCENT-CLR);
+}
+
+.checkbox::after {
+  content: "";
+  height: 10px;
+  width: 6px;
+  border-right: solid 1.5px var(--BODY-CLR);
+  border-bottom: solid 1.5px var(--BODY-CLR);
+  transform: rotate(45deg);
+  opacity: 0;
+  align-self: center;
+}
+
+.checkbox:checked::after {
+  opacity: 1;
+}
+
+.todo {
+  width: 100%;
+  background-color: #1b1d1f;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem;
+  border-radius: 0.5rem;
+  padding-block: 0.4rem;
+  align-items: center;
+}
+
+.todo-name {
+  font-size: 0.8rem;
+  color: #f9fbfc;
+}
+
+.delete-btn {
+  width: 1.2rem;
+  color: grey;
+}
+
+.delete-btn:hover {
+  color: red;
+  cursor: pointer;
+}
