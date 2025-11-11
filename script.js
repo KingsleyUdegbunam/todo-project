@@ -93,6 +93,14 @@ function completeTask() {
 
         if (itemId === checkId) {
           todo.classList.toggle("completed-task");
+
+          console.log(todo.innerHTML);
+          const todoNew = todo.innerHTML;
+          todoArray.splice(itemId, 1);
+
+          todoArray.push(todoNew);
+          saveToStorage();
+          renderTodoList();
         }
       });
     });
