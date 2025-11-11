@@ -62,6 +62,10 @@ h6 {
   text-wrap: balance;
 }
 
+ul {
+  padding: 0;
+}
+
 #root,
 #__next {
   isolation: isolate;
@@ -164,6 +168,17 @@ input {
   display: flex;
 }
 
+.todo {
+  width: 100%;
+  background-color: #1b1d1f;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem;
+  border-radius: 0.5rem;
+  padding-block: 0.4rem;
+  align-items: center;
+}
+
 .checkbox-n-item {
   display: flex;
   height: max-content;
@@ -209,20 +224,14 @@ input {
   opacity: 1;
 }
 
-.todo {
-  width: 100%;
-  background-color: #1b1d1f;
-  display: flex;
-  justify-content: space-between;
-  padding: 0.3rem;
-  border-radius: 0.5rem;
-  padding-block: 0.4rem;
-  align-items: center;
-}
-
 .todo-name {
   font-size: 0.8rem;
   color: #f9fbfc;
+}
+
+.completed-task {
+  text-decoration: line-through;
+  color: grey;
 }
 
 .delete-btn {
@@ -230,7 +239,8 @@ input {
   color: grey;
 }
 
-.delete-btn:hover {
+.delete-btn:hover,
+.delete-btn:active {
   color: red;
   cursor: pointer;
 }

@@ -2,17 +2,29 @@ const todoHolderElem = document.querySelector(".js-todo-holder");
 const inputElem = document.querySelector(".js-input-field");
 const addBtnElem = document.querySelector(".js-add-btn");
 
-const todoArray = [];
+/* Get from localStorage on load or empty when there is nothing in storage */
+const todoArray = JSON.parse(localStorage.getItem("todo")) || [];
+
+/* Render page on load */
+renderTodoList();
+
+function saveToStorage() {
+  localStorage.setItem("todo", JSON.stringify(todoArray));
+}
 
 function renderTodoList() {
   if (inputElem.value) {
     const todo = inputElem.value;
     todoArray.push(todo);
   }
+
+  saveToStorage();
+
   renderTodo();
 
+  completeTask();
+
   inputElem.value = "";
-  deleteTodo();
 }
 
 addBtnElem.addEventListener("click", () => {
@@ -24,19 +36,20 @@ inputElem.addEventListener("keypress", (Event) => {
     renderTodoList();
   }
 });
+
 function renderTodo() {
   let todoHTML = "";
 
   for (let i = 0; i <= todoArray.length - 1; i++) {
     todoHTML += `
-     <li class="todo" data-todo= '${i}'>
+     <li class="todo js-todo" data-todo= '${i}'>
             <div class="checkbox-n-item">
               <label for="checkbox-${i}"></label>
-              <input type="checkbox" name="checkbox" class='checkbox' id="checkbox-${i}">
-              <p class="todo-name">${todoArray[i]}</p>
+              <input type="checkbox" name="checkbox" class='checkbox js-checkbox checkbox-${i}' id="checkbox-${i}" data-check-id='${i}'>
+              <p class="todo-name js-todo-item" data-pointer='${i}'>${todoArray[i]}</p>
             </div>
 
-            <div class="svg-holder">
+            <div class="svg-holder js-delete-svg-holder">
               <svg class="delete-btn js-delete-btn" data-number= '${i}' xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
                 height="24" viewBox="0 0 24 24">
                 <path fill="currentcolor"
@@ -52,21 +65,36 @@ function renderTodo() {
 }
 
 /* DELETE LOGIC */
-function deleteTodo() {
-  document.querySelectorAll(".js-delete-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      console.log("hello");
+/* EVENT DELEGATION fOR DELETING ITEM */
+todoHolderElem.addEventListener("click", (event) => {
+  if (
+    event.target.classList.contains("delete-btn") ||
+    event.target.classList.contains("js-delete-svg-holder")
+  ) {
+    console.log(event.target.closest(".todo"));
 
-      document.querySelectorAll(".todo").forEach((todo) => {
-        if (button.dataset.number === todo.dataset.todo) {
-          const number = button.dataset.number;
-          console.log(number);
-          todoArray.splice(number, 1);
+    const itemNumber = event.target.closest(".todo").dataset.todo;
+    todoArray.splice(itemNumber, 1);
+
+    renderTodoList();
+
+    saveToStorage();
+  }
+});
+
+function completeTask() {
+  document.querySelectorAll(".js-checkbox").forEach((check) => {
+    check.addEventListener("click", () => {
+      const checkId = check.dataset.checkId;
+      console.log(checkId);
+
+      document.querySelectorAll(".js-todo-item").forEach((todo) => {
+        const itemId = todo.dataset.pointer;
+
+        if (itemId === checkId) {
+          todo.classList.toggle("completed-task");
         }
-        renderTodoList();
       });
     });
   });
 }
-
-/* COMLETED LOGIC */
