@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Handlee&display=swap");
 /*
   Josh's Custom CSS Reset
   https://www.joshwcomeau.com/css/custom-css-reset/
@@ -73,20 +74,25 @@ ul {
 
 /* DEFAULT STYLES */
 :root {
-  --ACCENT-CLR: #00fec3;
-  --BODY-CLR: #0e1213;
-}
-
-p {
-  color: white;
-  font-family: sans-serif;
+  --ACCENT-CLR: #ffc745;
+  --BODY-CLR: #00504fee;
+  --PLACEHOLDER-CLR: rgba(255, 255, 255, 0.253);
+  --DELETE-BTN-CLR: rgb(232, 47, 47);
 }
 
 body {
-  background-color: var(--BODY-CLR);
+  background-image: linear-gradient(var(--BODY-CLR)), url(assets/bg-ii.jpg);
+  background-size: cover;
+  background-position: center;
 }
 svg {
   color: white;
+}
+
+/* TEXT */
+p {
+  color: white;
+  font-family: "Handlee", cursive;
 }
 
 /* Header */
@@ -112,6 +118,8 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 60%;
+  max-width: 75%;
 }
 
 /* INPUT FIELD */
@@ -121,22 +129,31 @@ section {
   justify-content: space-between;
   padding-inline-start: 0.8rem;
   border-radius: 2rem;
+
+  width: 100%;
 }
 
 input {
   background-color: transparent;
-  width: 25rem;
+  font-family: "Handlee", cursive;
+
+  flex: 4;
   padding: 0.25rem;
   border: none;
-  outline: red;
   color: white;
   cursor: pointer;
 
   font-size: 0.9rem;
+
+  outline: none;
+}
+
+input::placeholder {
+  color: var(--PLACEHOLDER-CLR);
 }
 
 .add-btn {
-  background-color: rgba(255, 0, 0, 0.212);
+  flex: 0.4;
   background-color: var(--ACCENT-CLR);
 
   border: none;
@@ -144,8 +161,8 @@ input {
 
   height: inherit;
   padding: 0.5rem;
-  width: 3.8rem;
 
+  font-family: "Handlee", cursive;
   font-weight: 600;
   font-size: 0.7rem;
 
@@ -170,13 +187,25 @@ input {
 
 .todo {
   width: 100%;
-  background-color: #1b1d1f;
+  background-color: rgb(17, 17, 17);
   display: flex;
   justify-content: space-between;
   padding: 0.3rem;
   border-radius: 0.5rem;
   padding-block: 0.4rem;
   align-items: center;
+
+  background-image: linear-gradient(hsla(0, 0%, 7%, 0.925)),
+    url(assets/bg-ii.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.todo-name {
+  font-size: 0.8rem;
+  color: #f9fbfc;
+
+  align-self: center;
 }
 
 .checkbox-n-item {
@@ -224,16 +253,6 @@ input {
   opacity: 1;
 }
 
-.todo-name {
-  font-size: 0.8rem;
-  color: #f9fbfc;
-}
-
-.completed-task {
-  text-decoration: line-through;
-  color: grey;
-}
-
 .delete-btn {
   width: 1.2rem;
   color: grey;
@@ -241,6 +260,99 @@ input {
 
 .delete-btn:hover,
 .delete-btn:active {
-  color: red;
+  color: var(--DELETE-BTN-CLR);
   cursor: pointer;
+}
+
+/* DYNAMIC CLASS */
+.completed-task {
+  text-decoration: line-through;
+  color: rgba(128, 128, 128, 0.751);
+}
+
+@media screen and (max-width: 950px) {
+  input {
+    flex: 3;
+    font-size: 0.85rem;
+  }
+
+  .add-btn {
+    flex: 0.5;
+
+    font-size: 0.65rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  input {
+    font-size: 0.7rem;
+    flex: 2.5;
+  }
+
+  .add-btn {
+    flex: 0.55;
+    font-size: 0.6rem;
+  }
+
+  .todo-name {
+    font-size: 0.7rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .delete-btn {
+    width: 1rem;
+  }
+
+  .checkbox {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  input {
+    font-size: 0.62rem;
+    flex: 2.5;
+  }
+
+  .add-btn {
+    flex: 0.55;
+    font-size: 0.5rem;
+  }
+
+  .todo-name {
+    font-size: 0.6rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .todo {
+    padding-inline: 0.1rem;
+    padding-block: 0.2rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  input {
+    font-size: 0.52rem;
+    flex: 2;
+  }
+
+  .add-btn {
+    flex: 0.4;
+    font-size: 0.4rem;
+  }
+
+  .todo-name {
+    font-size: 0.6rem;
+  }
+
+  h1 {
+    font-size: 1.35rem;
+  }
 }

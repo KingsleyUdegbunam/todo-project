@@ -8,7 +8,7 @@ const todoArray = JSON.parse(localStorage.getItem("todo")) || [];
 /* Render page on load */
 renderTodoList();
 
-function saveToStorage() {
+function saveToDoToStorage() {
   localStorage.setItem("todo", JSON.stringify(todoArray));
 }
 
@@ -18,7 +18,7 @@ function renderTodoList() {
     todoArray.push(todo);
   }
 
-  saveToStorage();
+  saveToDoToStorage();
 
   renderTodo();
 
@@ -37,12 +37,16 @@ inputElem.addEventListener("keypress", (Event) => {
   }
 });
 
+/* HOW DO WE SAVE THE PAGE START SO AS TO KEEP THE COMPLETED TASK EVEN AFTER RE-RENDERING/REFRESH? */
 function renderTodo() {
+  const completedTodoArray = JSON.parse(localStorage.getItem("completedCheck"));
+
+  console.log(completedTodoArray);
   let todoHTML = "";
 
   for (let i = 0; i <= todoArray.length - 1; i++) {
     todoHTML += `
-     <li class="todo js-todo" data-todo= '${i}'>
+     <li class="todo js-todo" data-todo='${i}'>
             <div class="checkbox-n-item">
               <label for="checkbox-${i}"></label>
               <input type="checkbox" name="checkbox" class='checkbox js-checkbox checkbox-${i}' id="checkbox-${i}" data-check-id='${i}'>
@@ -62,6 +66,41 @@ function renderTodo() {
   }
 
   todoHolderElem.innerHTML = todoHTML;
+
+  document.querySelectorAll(".js-todo-item").forEach((item) => {
+    const { pointer } = item.dataset;
+
+    let matchingId;
+    completedTodoArray.forEach((check) => {
+      if (check.id === pointer) {
+        matchingId = check;
+      }
+      if (matchingId) {
+        if (check.state === "checked") {
+          item.classList.add("completed-task");
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll(".js-checkbox").forEach((check) => {
+    const { checkId } = check.dataset;
+
+    completedTodoArray.forEach((item) => {
+      let matchingItem;
+
+      if (item.id === checkId) {
+        matchingItem = item;
+      }
+
+      if (matchingItem) {
+        if (matchingItem.state === "checked") {
+          console.log("yes");
+          check.click();
+        }
+      }
+    });
+  });
 }
 
 /* DELETE LOGIC */
@@ -71,37 +110,66 @@ todoHolderElem.addEventListener("click", (event) => {
     event.target.classList.contains("delete-btn") ||
     event.target.classList.contains("js-delete-svg-holder")
   ) {
-    console.log(event.target.closest(".todo"));
-
     const itemNumber = event.target.closest(".todo").dataset.todo;
     todoArray.splice(itemNumber, 1);
 
     renderTodoList();
 
-    saveToStorage();
+    saveToDoToStorage();
   }
 });
 
 function completeTask() {
+  const completedIdArray =
+    JSON.parse(localStorage.getItem("completedCheck")) || [];
+
   document.querySelectorAll(".js-checkbox").forEach((check) => {
     check.addEventListener("click", () => {
       const checkId = check.dataset.checkId;
-      console.log(checkId);
 
       document.querySelectorAll(".js-todo-item").forEach((todo) => {
         const itemId = todo.dataset.pointer;
 
-        if (itemId === checkId) {
-          todo.classList.toggle("completed-task");
+        if (itemId !== checkId) return;
 
-          console.log(todo.innerHTML);
-          const todoNew = todo.innerHTML;
-          todoArray.splice(itemId, 1);
+        todo.classList.toggle("completed-task");
 
-          todoArray.push(todoNew);
-          saveToStorage();
-          renderTodoList();
+        if (todo.classList.contains("completed-task")) {
+          if (completedIdArray.length !== 0) {
+            let matchingId;
+
+            completedIdArray.forEach((item) => {
+              if (item.id === itemId) {
+                matchingId = item;
+              }
+            });
+
+            if (matchingId) {
+              matchingId.state = "checked";
+            } else {
+              completedIdArray.push({ id: itemId, state: "checked" });
+            }
+          } else {
+            completedIdArray.push({ id: itemId, state: "checked" });
+          }
+        } else {
+          let matchingId;
+
+          completedIdArray.forEach((item) => {
+            if (item.id === itemId) {
+              matchingId = item;
+            }
+          });
+          if (matchingId) {
+            matchingId.state = "unchecked";
+          }
         }
+
+        console.log(completedIdArray);
+        localStorage.setItem(
+          "completedCheck",
+          JSON.stringify(completedIdArray)
+        );
       });
     });
   });
