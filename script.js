@@ -134,6 +134,8 @@ function completeTask() {
 
         todo.classList.toggle("completed-task");
 
+        console.log(todo);
+
         if (todo.classList.contains("completed-task")) {
           if (completedIdArray.length !== 0) {
             let matchingId;
@@ -141,6 +143,7 @@ function completeTask() {
             completedIdArray.forEach((item) => {
               if (item.id === itemId) {
                 matchingId = item;
+                console.log("Found match!");
               }
             });
 
