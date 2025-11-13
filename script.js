@@ -41,7 +41,6 @@ inputElem.addEventListener("keypress", (Event) => {
 function renderTodo() {
   const completedTodoArray = JSON.parse(localStorage.getItem("completedCheck"));
 
-  console.log(completedTodoArray);
   let todoHTML = "";
 
   for (let i = 0; i <= todoArray.length - 1; i++) {
@@ -69,37 +68,42 @@ function renderTodo() {
 
   document.querySelectorAll(".js-todo-item").forEach((item) => {
     const { pointer } = item.dataset;
+    console.log(item);
 
     let matchingId;
-    completedTodoArray.forEach((check) => {
-      if (check.id === pointer) {
-        matchingId = check;
-      }
-      if (matchingId) {
-        if (check.state === "checked") {
-          item.classList.add("completed-task");
+    if (completedTodoArray) {
+      completedTodoArray.forEach((check) => {
+        if (check.id === pointer) {
+          matchingId = check;
         }
-      }
-    });
+        if (matchingId) {
+          if (check.state === "checked") {
+            item.classList.add("completed-task");
+          }
+        }
+      });
+    }
   });
 
   document.querySelectorAll(".js-checkbox").forEach((check) => {
     const { checkId } = check.dataset;
 
-    completedTodoArray.forEach((item) => {
-      let matchingItem;
+    if (completedTodoArray) {
+      completedTodoArray.forEach((item) => {
+        let matchingItem;
 
-      if (item.id === checkId) {
-        matchingItem = item;
-      }
-
-      if (matchingItem) {
-        if (matchingItem.state === "checked") {
-          console.log("yes");
-          check.click();
+        if (item.id === checkId) {
+          matchingItem = item;
         }
-      }
-    });
+
+        if (matchingItem) {
+          if (matchingItem.state === "checked") {
+            console.log("yes");
+            check.click();
+          }
+        }
+      });
+    }
   });
 }
 
