@@ -81,6 +81,7 @@ ul {
 }
 
 body {
+  background-color: var(--BODY-CLR);
   background-image: linear-gradient(var(--BODY-CLR)), url(assets/bg-ii.jpg);
   background-size: cover;
   background-position: center;
@@ -163,7 +164,7 @@ input::placeholder {
   padding: 0.5rem;
 
   font-family: "Handlee", cursive;
-  font-weight: 600;
+  font-weight: 900;
   font-size: 1rem;
 
   cursor: pointer;

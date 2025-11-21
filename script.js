@@ -41,6 +41,8 @@ inputElem.addEventListener("keypress", (Event) => {
 function renderTodo() {
   const completedTodoArray = JSON.parse(localStorage.getItem("completedCheck"));
 
+  console.log(completedTodoArray);
+
   let todoHTML = "";
 
   for (let i = 0; i <= todoArray.length - 1; i++) {
