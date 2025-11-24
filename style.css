@@ -82,6 +82,8 @@ ul {
 
 body {
   height: 100%;
+  padding-bottom: 2rem;
+
   background-color: var(--BODY-CLR);
   background-image: linear-gradient(
       hsla(179, 100%, 16%, 0.818),
@@ -120,7 +122,6 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 2rem;
 }
 
 .section-container {
@@ -195,7 +196,6 @@ input::placeholder {
   width: 100%;
   margin-top: 0.5rem;
   flex-direction: column;
-  gap: 0.5rem;
   display: flex;
 }
 
