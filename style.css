@@ -75,17 +75,24 @@ ul {
 /* DEFAULT STYLES */
 :root {
   --ACCENT-CLR: #ffc745;
-  --BODY-CLR: #00504fee;
+  --BODY-CLR: #004c4b;
   --PLACEHOLDER-CLR: rgba(255, 255, 255, 0.253);
   --DELETE-BTN-CLR: rgb(232, 47, 47);
 }
 
 body {
+  height: 100%;
   background-color: var(--BODY-CLR);
-  background-image: linear-gradient(var(--BODY-CLR)), url(assets/bg-ii.jpg);
+  background-image: linear-gradient(
+      hsla(179, 100%, 16%, 0.818),
+      hsla(179, 100%, 16%, 0.818)
+    ),
+    url(assets/bgg.JPG);
   background-size: cover;
-  background-position: center;
+  /* background-position: center, center; */
+  /* background-repeat: no-repeat, no-repeat; */
 }
+
 svg {
   color: white;
 }
@@ -196,8 +203,7 @@ input::placeholder {
   padding-block: 0.4rem;
   align-items: center;
 
-  background-image: linear-gradient(hsla(0, 0%, 7%, 0.925)),
-    url(assets/bg-ii.jpg);
+  background-image: linear-gradient(hsla(0, 0%, 7%, 0.925)), url(assets/bgg.JPG);
   background-size: cover;
   background-position: center;
 }
@@ -213,6 +219,9 @@ input::placeholder {
   display: flex;
   height: max-content;
   gap: 0.5rem;
+
+  align-items: center;
+  justify-content: center;
   margin: auto 0;
   margin: 0;
   padding: 0;
@@ -345,13 +354,42 @@ input::placeholder {
     flex: 2;
   }
 
+  .input-field {
+    padding-inline-start: 0.2rem;
+  }
+
   .add-btn {
-    flex: 0.4;
-    font-size: 0.8rem;
+    flex: 0.5;
+    font-size: 0.6rem;
+  }
+
+  .delete-btn {
+    width: 0.8rem;
+  }
+
+  .checkbox {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+
+  .checkbox::after {
+    content: none /*  */;
+    height: 6px;
+    width: 9px;
+    border-right: solid 1px var(--BODY-CLR);
+    border-bottom: solid 1px var(--BODY-CLR);
+  }
+
+  .todo-list {
+    gap: 0.3rem;
+  }
+
+  .todo {
+    padding-block: 0;
   }
 
   .todo-name {
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
 
   h1 {

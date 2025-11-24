@@ -4,12 +4,17 @@ const addBtnElem = document.querySelector(".js-add-btn");
 
 /* Get from localStorage on load or empty when there is nothing in storage */
 const todoArray = JSON.parse(localStorage.getItem("todo")) || [];
+let completedTodoArray = JSON.parse(localStorage.getItem("completedCheck"));
 
-/* Render page on load */
+/* Render on load */
 renderTodoList();
 
 function saveToDoToStorage() {
   localStorage.setItem("todo", JSON.stringify(todoArray));
+}
+
+function saveCompletedToStorage() {
+  localStorage.setItem("completedCheck", JSON.stringify(completedTodoArray));
 }
 
 function renderTodoList() {
@@ -19,9 +24,7 @@ function renderTodoList() {
   }
 
   saveToDoToStorage();
-
   renderTodo();
-
   completeTask();
 
   inputElem.value = "";
@@ -38,11 +41,11 @@ inputElem.addEventListener("keypress", (Event) => {
 });
 
 /* HOW DO WE SAVE THE PAGE START SO AS TO KEEP THE COMPLETED TASK EVEN AFTER RE-RENDERING/REFRESH? */
+
 function renderTodo() {
-  const completedTodoArray = JSON.parse(localStorage.getItem("completedCheck"));
-
-  console.log(completedTodoArray);
-
+  /* if (completedTodoArray) {
+    console.log(completedTodoArray);
+  } */
   let todoHTML = "";
 
   for (let i = 0; i <= todoArray.length - 1; i++) {
@@ -68,41 +71,21 @@ function renderTodo() {
 
   todoHolderElem.innerHTML = todoHTML;
 
-  document.querySelectorAll(".js-todo-item").forEach((item) => {
-    const { pointer } = item.dataset;
-    console.log(item);
-
-    let matchingId;
-    if (completedTodoArray) {
-      completedTodoArray.forEach((check) => {
-        if (check.id === pointer) {
-          matchingId = check;
-        }
-        if (matchingId) {
-          if (check.state === "checked") {
-            item.classList.add("completed-task");
-          }
-        }
-      });
-    }
-  });
-
-  document.querySelectorAll(".js-checkbox").forEach((check) => {
-    const { checkId } = check.dataset;
+  document.querySelectorAll(".js-todo-item").forEach((todo) => {
+    const itemContent = todo.innerHTML;
 
     if (completedTodoArray) {
       completedTodoArray.forEach((item) => {
-        let matchingItem;
-
-        if (item.id === checkId) {
-          matchingItem = item;
+        if (item.content !== itemContent) {
+          return;
         }
 
-        if (matchingItem) {
-          if (matchingItem.state === "checked") {
-            console.log("yes");
-            check.click();
-          }
+        if (item.state === "checked") {
+          todo.classList.add("completed-task");
+
+          const parent = todo.closest(".js-todo");
+          const checkbox = parent.querySelector(".js-checkbox");
+          checkbox.click();
         }
       });
     }
@@ -110,24 +93,35 @@ function renderTodo() {
 }
 
 /* DELETE LOGIC */
-/* EVENT DELEGATION fOR DELETING ITEM */
 todoHolderElem.addEventListener("click", (event) => {
   if (
     event.target.classList.contains("delete-btn") ||
     event.target.classList.contains("js-delete-svg-holder")
   ) {
     const itemNumber = event.target.closest(".todo").dataset.todo;
+    const todoParent = event.target.closest(".todo");
+    const todo = todoParent.querySelector(".js-todo-item");
+    const content = todo.innerHTML;
+
     todoArray.splice(itemNumber, 1);
 
-    renderTodoList();
+    let newCArray = [];
+    completedTodoArray.forEach((item) => {
+      if (item.content === content) return;
+      newCArray.push(item);
+    });
 
+    completedTodoArray = newCArray;
+
+    saveCompletedToStorage();
     saveToDoToStorage();
+    renderTodoList();
   }
 });
 
+/* COMPLETE TASK ON CLICK LOGIC */
 function completeTask() {
-  const completedIdArray =
-    JSON.parse(localStorage.getItem("completedCheck")) || [];
+  const completedIdArray = completedTodoArray || [];
 
   document.querySelectorAll(".js-checkbox").forEach((check) => {
     check.addEventListener("click", () => {
@@ -140,32 +134,31 @@ function completeTask() {
 
         todo.classList.toggle("completed-task");
 
-        console.log(todo);
+        const content = todo.innerHTML;
 
         if (todo.classList.contains("completed-task")) {
           if (completedIdArray.length !== 0) {
             let matchingId;
 
             completedIdArray.forEach((item) => {
-              if (item.id === itemId) {
+              if (item.content === content) {
                 matchingId = item;
-                console.log("Found match!");
               }
             });
 
             if (matchingId) {
               matchingId.state = "checked";
             } else {
-              completedIdArray.push({ id: itemId, state: "checked" });
+              completedIdArray.push({ id: itemId, state: "checked", content });
             }
           } else {
-            completedIdArray.push({ id: itemId, state: "checked" });
+            completedIdArray.push({ id: itemId, state: "checked", content });
           }
         } else {
           let matchingId;
 
           completedIdArray.forEach((item) => {
-            if (item.id === itemId) {
+            if (item.content === content) {
               matchingId = item;
             }
           });
@@ -174,11 +167,9 @@ function completeTask() {
           }
         }
 
-        console.log(completedIdArray);
-        localStorage.setItem(
-          "completedCheck",
-          JSON.stringify(completedIdArray)
-        );
+        completedTodoArray = completedIdArray;
+
+        saveCompletedToStorage();
       });
     });
   });
