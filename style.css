@@ -77,7 +77,8 @@ ul {
   --ACCENT-CLR: #ffc745;
   --BODY-CLR: #004c4b;
   --PLACEHOLDER-CLR: rgba(255, 255, 255, 0.253);
-  --DELETE-BTN-CLR: rgb(232, 47, 47);
+  --DELETE-BTN-CLR: rgba(232, 47, 47, 0.778);
+  --DELETE-BTN-HVR: rgba(174, 36, 36, 0.778);
 }
 
 body {
@@ -280,13 +281,12 @@ input::placeholder {
 
 .delete-btn {
   width: 1.2rem;
-  color: grey;
+  color: var(--DELETE-BTN-CLR);
 }
 
-.delete-btn:hover,
-.delete-btn:active {
-  color: var(--DELETE-BTN-CLR);
+.delete-btn:hover {
   cursor: pointer;
+  color: var(--DELETE-BTN-HVR);
 }
 
 /* DYNAMIC CLASS */
