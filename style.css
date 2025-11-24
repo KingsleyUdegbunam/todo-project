@@ -236,6 +236,10 @@ input::placeholder {
   padding: 0;
 }
 
+.checkbox-n-item :first-child {
+  margin-right: 0.5rem;
+}
+
 .checkbox {
   appearance: none;
   -moz-appearance: none;
@@ -374,6 +378,10 @@ input::placeholder {
 
   .delete-btn {
     width: 0.8rem;
+  }
+
+  .checkbox-n-item :first-child {
+    margin-right: 0.3rem;
   }
 
   .checkbox {
