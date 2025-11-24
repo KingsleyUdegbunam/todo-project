@@ -164,6 +164,7 @@ input::placeholder {
 .add-btn {
   flex: 0.4;
   background-color: var(--ACCENT-CLR);
+  color: black;
 
   border: none;
   border-radius: 2rem;

@@ -41,11 +41,7 @@ inputElem.addEventListener("keypress", (Event) => {
 });
 
 /* HOW DO WE SAVE THE PAGE START SO AS TO KEEP THE COMPLETED TASK EVEN AFTER RE-RENDERING/REFRESH? */
-
 function renderTodo() {
-  /* if (completedTodoArray) {
-    console.log(completedTodoArray);
-  } */
   let todoHTML = "";
 
   for (let i = 0; i <= todoArray.length - 1; i++) {
